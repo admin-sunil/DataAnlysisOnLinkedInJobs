@@ -18,12 +18,6 @@ import pandas as pd
   * Splitting the columns
   * Categorizing the columns
 5. Plotting the data
-
-
-
-
-
-
 """
 
 af_url = 'https://drive.google.com/file/d/1o5-xulwFzvw0dXaxrgjIPjaaQ6OjfVH3/view?usp=share_link'
@@ -32,12 +26,6 @@ us_url = 'https://drive.google.com/file/d/1qzQcDmD5Pw9BhNa06qVKm4ReSus9rhge/view
 af_df = pd.read_csv('https://drive.google.com/uc?id=' + af_url.split('/')[-2],error_bad_lines=False)
 ca_df = pd.read_csv('https://drive.google.com/uc?id=' + ca_url.split('/')[-2],error_bad_lines=False)
 us_df = pd.read_csv('https://drive.google.com/uc?id=' + us_url.split('/')[-2],error_bad_lines=False)
-
-af_df.head(3)
-
-ca_df.head()
-
-us_df.head()
 
 #Africa df has 9 columns and 5744 with null values
 #Canada df has 9 columns and 2773 with null values
@@ -54,28 +42,17 @@ list(us_df.columns)
 af_df.info()
 af_df.isnull().sum()
 
-# Canada dataset info
-ca_df.info()
-ca_df.isnull().sum()
-
-# USA dataset info
-us_df.info()
-us_df.isnull().sum()
-
 #concating all the datasets to one df
 df = pd.concat([af_df, ca_df, us_df])
 df.shape
 
-df.head(5)
-
 #dropping link and description column
 df = df.drop(['description', 'link'], axis=1)
-df.shape
+df.head()
 
 #Criteria column in datafram has rows with other language
 df['criteria']
 
-!pip install langdetect
 import io, re, ast
 from langdetect import detect
 
@@ -116,8 +93,6 @@ for employment_category in df['criteria']:
       break
   employment_type.append(employment_types.get('Employment type'))
 df = df.assign(seniority_level=seniority_level, employment_type=employment_type)
-df.head()
-
 df.head()
 
 #Unique categories and Null values in each new column
